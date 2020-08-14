@@ -42,14 +42,30 @@ function getValue(e) {
 }
 
 async function getPic(breed) {
+  removePic()
   const url = `https://dog.ceo/api/breed/${breed}/images/random`
   try {
     const res = await axios.get(url)
     console.log(res.data)
+    picAppend(res.data.message)
   } catch (error) {
     console.log(`Error: ${error}`)
   }
 }
+
+function picAppend(pic) {
+  const img = document.createElement('img')
+  img.src = pic
+  document.querySelector('#append-dog').append(img)
+}
+
+function removePic() {
+  const oldPic = document.querySelector('#append-dog')
+  while (oldPic.lastChild) {
+    oldPic.removeChild(oldPic.lastChild)
+  }
+}
+
 const form = document.querySelector('form')
 // console.log(form)
 form.addEventListener('submit', getValue)
